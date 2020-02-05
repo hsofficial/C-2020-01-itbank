@@ -8,11 +8,19 @@ void main() {
 		printf("arr[%d] value : %d\n\n", i, a[i]);
 	}
 
-	printf("#Æ÷ÀÎÅÍ º¯¼ö·Î ¹è¿­ Á¢±Ù\n\n");
+	printf("#access by adã…‡ress\n\n");
 	for (int i = 0; i < 5; i++) {
 		printf("arr[%d] address : %p\n", i, a+i);
 		printf("arr[%d] value : %d\n\n", i, *(a+i) );
 	}
+	//access by address > for melloc()
 
-	//access by adress > for melloc()
+	int* p_a;
+	p_a = a; // ë°°ì—´ì˜ ì‹œì‘ì£¼ì†Œë¥¼ p_aì— í• ë‹¹
+
+	printf("#access by pointer\n\n");
+	for (int i = 0; i < 5; i++) {
+		printf("arr[%d] address : %p\n", i, p_a + i);
+		printf("arr[%d] value : %d\n\n", i, *(p_a + i));
+	}
 }
