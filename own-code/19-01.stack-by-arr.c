@@ -2,73 +2,86 @@
 #include<stdlib.h>
 
 typedef struct node {
-	int arr[4];//ÃÖ´ë ±æÀÌ¸¸Å­ °ø°£ÇÒ´ç
-	int top;// stackÀÇ °¡Àå ¸¶Áö¸· µ¥ÀÌÅÍ À§Ä¡
-}Stack;//º°Äª
+	int arr[4];//ìµœëŒ€ ê¸¸ì´ë§Œí¼ ê³µê°„í• ë‹¹
+	int top;// stackì˜ ê°€ì¥ ë§ˆì§€ë§‰ ë°ì´í„° ìœ„ì¹˜
+}Stack;//ë³„ì¹­
 
-//±¸Á¶Ã¼ Æ÷ÀÎÅÍº¯¼ö·Î ¸Å°³º¯¼ö¸¦ ¼±¾ğÇÏ´Â ÀÌÀ¯
-//mainÀÌ ¾Æ´Ñ ÇÔ¼ö¿¡¼­ mainÀÇ °ªÀ» º¯°æÇÏ±â À§ÇØ
-void init(Stack* p_stack)	// initÀº ÃÊ±âÈ­ ÇÏ´Â ÇÔ¼ö
+//êµ¬ì¡°ì²´ í¬ì¸í„°ë³€ìˆ˜ë¡œ ë§¤ê°œë³€ìˆ˜ë¥¼ ì„ ì–¸í•˜ëŠ” ì´ìœ 
+//mainì´ ì•„ë‹Œ í•¨ìˆ˜ì—ì„œ mainì˜ ê°’ì„ ë³€ê²½í•˜ê¸° ìœ„í•´
+void init(Stack* p_stack)	// initì€ ì´ˆê¸°í™” í•˜ëŠ” í•¨ìˆ˜
 {
-	p_stack->top = -1;//µ¥ÀÌÅÍ¸¦ ³ÖÀ» À§Ä¡¸¦ -1·Î ÃÊ±âÈ­
+	p_stack->top = -1;//ë°ì´í„°ë¥¼ ë„£ì„ ìœ„ì¹˜ë¥¼ -1ë¡œ ì´ˆê¸°í™”
+	// ==> (*p_stack).top = -1;
 }
 
-//p_stack : Æ÷ÀÎÅÍº¯¼ö 4byteÂ¥¸® ÁÖ¼ÒÀúÀåÇÏ´Â º¯¼ö
-void push(Stack* p_stack, int data) {	//»ğÀÔ
-	//¸¸¾à stackÀÇ ÀÎµ¦½º°¡ ÃÖ´ëÀÌ¸é overflow ¹ß»ı
-	//topÀ» ÀÌ¿ëÇÏ¿© °ªÀ» ´ëÀÔ
+//p_stack : í¬ì¸í„°ë³€ìˆ˜ 4byteì§œë¦¬ ì£¼ì†Œì €ì¥í•˜ëŠ” ë³€ìˆ˜
+void push(Stack* p_stack, int data) {	//ì‚½ì…
+	//ë§Œì•½ stackì˜ ì¸ë±ìŠ¤ê°€ ìµœëŒ€ì´ë©´ overflow ë°œìƒ
+	//topì„ ì´ìš©í•˜ì—¬ ê°’ì„ ëŒ€ì…
 	if (p_stack->top >= 3)	//3 = arr max - 1
 	{
 		printf("Stack is full.\n");
 		return;
 	}
-
 	p_stack->arr[++(p_stack->top)] = data;
+/*
+same code)
+		p_stack->top += 1; //topì„ ì´ìš©í•˜ì—¬ ê°’ì„ ëŒ€ì…
+		p_stack->arr[p_stack->top] = data;
+*/
 }
 
-int pop(Stack* p_stack) {	//»èÁ¦
-	//topÀÌ -1(ÃÊ±â°ª)±îÁö ³»·Á¿À¸é ¹İÈ¯ÇÒ µ¥ÀÌÅÍ°¡ ¾ø´Ù´Â ÀÇ¹Ì
+int pop(Stack* p_stack) {	//ì‚­ì œ
+	//topì´ -1(ì´ˆê¸°ê°’)ê¹Œì§€ ë‚´ë ¤ì˜¤ë©´ ë°˜í™˜í•  ë°ì´í„°ê°€ ì—†ë‹¤ëŠ” ì˜ë¯¸
 	if (p_stack->top == -1)
 	{
 		printf("Stack is empty.\n");
 		return;
 	}
-	//ÇöÀç topÀÌ °¡¸£Å°´Â ÀÎµ¦½º¹øÈ£ÀÇ µ¥ÀÌÅÍ¸¦ ¹İÈ¯ÇÏ°í topÀ» ÇÑÄ­ °¨¼Ò
+	//í˜„ì¬ topì´ ê°€ë¥´í‚¤ëŠ” ì¸ë±ìŠ¤ë²ˆí˜¸ì˜ ë°ì´í„°ë¥¼ ë°˜í™˜í•˜ê³  topì„ í•œì¹¸ ê°ì†Œ
 	return p_stack->arr[(p_stack->top)--];
+/*
+same code)
+	int num;
+	num = p_stack->arr[p_stack->top];
+	p_stack->top -= 1;
+
+	return num;
+*/
 }
 
-int peek(Stack* p_stack) {	//top µ¥ÀÌÅÍ È®ÀÎ
-	//°ªÀÌ ¾øÀ¸¸é -1 ¹İÈ¯
+int peek(Stack* p_stack) {	//top ë°ì´í„° í™•ì¸
+	//ê°’ì´ ì—†ìœ¼ë©´ -1 ë°˜í™˜
 	if (p_stack->top == -1)
 	{
 		printf("Stack is empty = Data is empty.\n");
 		return;
 	}
-	//ÇöÀç topÀÌ °¡¸£Å°´Â °ªÀ» ¹İÈ¯
+	//í˜„ì¬ topì´ ê°€ë¥´í‚¤ëŠ” ê°’ì„ ë°˜í™˜
 	return p_stack->arr[p_stack->top];
 }
 
 void main() {
-	Stack stack;	//Stack±¸Á¶Ã¼ »ı¼º
+	Stack stack;	//Stackêµ¬ì¡°ì²´ ìƒì„±
 
-	init(&stack);	//stackÀÇ ÁÖ¼Ò¸¦ ÀÎÀÚ·Î ³Ñ°ÜÁÜ
-	push(&stack, 5);//stackÀÇ ÁÖ¼Ò¿Í ÀúÀåÇÒ µ¥ÀÌÅÍ¸¦ ³Ñ°ÜÁÜ
+	init(&stack);	//stackì˜ ì£¼ì†Œë¥¼ ì¸ìë¡œ ë„˜ê²¨ì¤Œ
+	push(&stack, 5);//stackì˜ ì£¼ì†Œì™€ ì €ì¥í•  ë°ì´í„°ë¥¼ ë„˜ê²¨ì¤Œ
 	push(&stack, 2);
 	push(&stack, 7);
 	push(&stack, 8);
-	push(&stack, 10); //stack overflow¹ß»ı (¹è¿­ÀÌ ²ËÂü)
+	push(&stack, 10); //stack overflowë°œìƒ (ë°°ì—´ì´ ê½‰ì°¸)
 
 	printf("peek : %d\n", peek(&stack));
 
 	int n;
-	n = pop(&stack); //popÇÔ¼ö È£Ãâ(µ¥ÀÌÅÍ¹İÈ¯)
+	n = pop(&stack); //popí•¨ìˆ˜ í˜¸ì¶œ(ë°ì´í„°ë°˜í™˜)
 	printf("pop : %d\n", n);
-	n = pop(&stack); //popÇÔ¼ö È£Ãâ(µ¥ÀÌÅÍ¹İÈ¯)
+	n = pop(&stack); //popí•¨ìˆ˜ í˜¸ì¶œ(ë°ì´í„°ë°˜í™˜)
 	printf("pop : %d\n", n);
-	n = pop(&stack); //popÇÔ¼ö È£Ãâ(µ¥ÀÌÅÍ¹İÈ¯)
+	n = pop(&stack); //popí•¨ìˆ˜ í˜¸ì¶œ(ë°ì´í„°ë°˜í™˜)
 	printf("pop : %d\n", n);
-	n = pop(&stack); //popÇÔ¼ö È£Ãâ(µ¥ÀÌÅÍ¹İÈ¯)
+	n = pop(&stack); //popí•¨ìˆ˜ í˜¸ì¶œ(ë°ì´í„°ë°˜í™˜)
 	printf("pop : %d\n", n);
-	n = pop(&stack); //underflow¹ß»ı (¹è¿­¿¡ µ¥ÀÌÅÍ°¡ ¾øÀ½)
+	n = pop(&stack); //underflowë°œìƒ (ë°°ì—´ì— ë°ì´í„°ê°€ ì—†ìŒ)
 	printf("pop : %d\n", n);
 }
